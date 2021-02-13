@@ -4,6 +4,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 import {NextPageContext} from 'next'
 import {MyPost} from '../../interfaces/post'
+import {getAllPostIds} from '../../lib/posts'
 
 interface PostPageProps {
   post: MyPost
@@ -59,6 +60,35 @@ Post.getInitialProps = async ({ query, req }: PostNextPageContext) => {
     post
   }
 }
+
+
+
+
+
+
+//__________________________________________________________________________________________
+
+//  export  async function getStaticProps({ params }) {
+  
+
+//   const response = await fetch(`${process.env.API_URL}/posts/${params.id}`)
+//   const post: MyPost = await response.json()
+
+//   return { props: { post:post } }
+// }
+
+// export  async function getStaticPaths() {
+
+
+//   const paths = await getAllPostIds()
+  
+//   return {
+//     paths,
+//     fallback: false
+//   }
+// }
+
+//__________________________________________________________________________________________
 
 // export async function getServerSideProps({ query, req }) {
 //   // if (!req) {
