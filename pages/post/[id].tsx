@@ -26,7 +26,15 @@ export default function Post({ post: serverPost }: PostPageProps) {
         }
     }, []);
 
-    if (!post) {
+    // if (!post) {
+    //     return (
+    //         <MainLayout>
+    //             <p>Loading ...</p>
+    //         </MainLayout>
+    //     );
+    // }
+
+    if (router.isFallback) {
         return (
             <MainLayout>
                 <p>Loading ...</p>
@@ -95,11 +103,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     // OR
 
-    // if (!post.id) {
-    //   return {
-    //     notFound: true,
-    //   }
-    // }
+    if (!post.id) {
+        return {
+            notFound: true,
+        };
+    }
 
     return {
         props: { post },
@@ -110,9 +118,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
 };
 
-export const GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
     const paths = await getAllPostIds();
-    paths.pop(paths[paths.lenth - 1]);
+    paths.pop(2);
 
     return {
         paths,

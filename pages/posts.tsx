@@ -4,6 +4,7 @@ import { MainLayout } from "../components/MainLayout";
 import Link from "next/link";
 import { MyPost } from "../interfaces/post";
 import { NextPageContext } from "next";
+import { useRouter } from "next/router";
 
 interface PostsPageProps {
     posts: MyPost[];
@@ -32,6 +33,15 @@ export default function Posts({ posts: serverPosts }: PostsPageProps) {
         );
     }
 
+    const router = useRouter();
+    if (router.isFallback) {
+        return (
+            <MainLayout>
+                <p>Loading ...</p>
+            </MainLayout>
+        );
+    }
+
     return (
         <MainLayout>
             <Head>
@@ -51,15 +61,11 @@ export default function Posts({ posts: serverPosts }: PostsPageProps) {
     );
 }
 
-Posts.getInitialProps = async ({ req }: NextPageContext) => {
-    if (!req) {
-        return { posts: null };
-    }
-
+export const getStaticProps = async () => {
     const response = await fetch(`${process.env.API_URL}/posts`);
     const posts: MyPost[] = await response.json();
 
     return {
-        posts,
+        props: { posts },
     };
 };
